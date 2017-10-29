@@ -7,8 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.company.HebrewCheck;
+
 import com.flyingpenguins.app.*;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,7 +60,9 @@ public class MainActivity extends AppCompatActivity {
             retval = 2;
         }
         else{
-            //TODO: what goes here?
+            Toast t = new Toast(this);
+            t.makeText(this,R.string.hebrewOnlyError, Toast.LENGTH_SHORT).show();
+
         }
 
         return retval;
