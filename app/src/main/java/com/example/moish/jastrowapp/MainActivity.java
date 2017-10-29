@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.company.HebrewCheck;
 import com.flyingpenguins.app.*;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //ImageView jastrowPic = (ImageView) findViewById(R.id.jastrowImage);
         //jastrowPic.setImageResource(R.mipmap.jastrowimage);
-        
+
 
 
         final Button button = (Button) findViewById(R.id.searchButton);
@@ -60,8 +62,16 @@ public class MainActivity extends AppCompatActivity {
         return retval;
     }
 
+    /**
+     *
+     * @param text the text to be checked
+     * @return true if the stirng only contains hebrew characters
+     */
     public boolean isHebrew(String text){
-        return true;
+
+        HebrewCheck hr = new HebrewCheck();
+        return hr.Run(text);
+
     }
 
     public void sendMessaage(View view){
