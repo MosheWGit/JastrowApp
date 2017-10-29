@@ -1,7 +1,10 @@
 package com.example.moish.jastrowapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -14,9 +17,18 @@ public class MainActivity extends AppCompatActivity {
         //ImageView jastrowPic = (ImageView) findViewById(R.id.jastrowImage);
         //jastrowPic.setImageResource(R.mipmap.jastrowimage);
 
-        EditText searchBox = (EditText) findViewById(R.id.searchBox);
-        String searchQuery = searchBox.getText().toString();
-        jastrowSearch(searchQuery);
+
+        final Button button = (Button) findViewById(R.id.searchButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+
+                sendMessaage(v);
+            }
+        });
+
+
+        //openPDF(page);
 
 
         /*File file = new File(Environment.getExternalStorageDirectory(),
@@ -35,11 +47,32 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void jastrowSearch(String text){
-        confirmHebrew(text);
+    public int jastrowSearch(String text){
+        boolean isThere = isHebrew(text);
+        //also make sure its not empty
+        int retval = 0;
+        if(isThere){
+            retval = 2;
+        }
+
+        return retval;
     }
 
-    public void confirmHebrew(String text){
+    public boolean isHebrew(String text){
+        return true;
+    }
+
+    public void sendMessaage(View view){
+        EditText searchBox = (EditText) findViewById(R.id.searchBox);
+        String searchQuery = searchBox.getText().toString();
+        int page = jastrowSearch(searchQuery);
+        Intent intent = new Intent(this, PDFViewer.class);
+        intent.putExtra("Page",page);
+        startActivity(intent);
 
     }
+
+    /*openPDF(int page){
+
+    }*/
 }
