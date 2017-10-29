@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
         if(isThere){
             retval = 2;
         }
+        else{
+            //TODO: what goes here?
+        }
 
         return retval;
     }
