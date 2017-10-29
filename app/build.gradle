@@ -29,4 +29,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile 'com.github.bateksc:android-pdf-viewer:2.7.0'
+    compile 'com.github.barteksc:android-pdf-viewer:2.7.0'
 }
