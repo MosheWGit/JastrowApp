@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import com.flyingpenguins.app.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //ImageView jastrowPic = (ImageView) findViewById(R.id.jastrowImage);
         //jastrowPic.setImageResource(R.mipmap.jastrowimage);
+        
 
 
         final Button button = (Button) findViewById(R.id.searchButton);
