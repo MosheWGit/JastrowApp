@@ -14,58 +14,56 @@ import com.flyingpenguins.app.*;
 
 public class MainActivity extends AppCompatActivity {
 
+    private HebrewCheck hebrewCheck;
+    private BSForJPDF pageFinder;
+    Button button;
+    EditText text;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //ImageView jastrowPic = (ImageView) findViewById(R.id.jastrowImage);
-        //jastrowPic.setImageResource(R.mipmap.jastrowimage);
 
+        getPage("גע"); //this warms up the page finder
 
+        setUpButton();
+    }
 
-        final Button button = (Button) findViewById(R.id.searchButton);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-
-                sendMessaage(v);
-            }
-        });
-
-
-        //openPDF(page);
-
-
-        /*File file = new File(Environment.getExternalStorageDirectory(),
-                "Report.pdf");
-        Uri path = Uri.fromFile(file);
-        Intent pdfOpenintent = new Intent(Intent.ACTION_VIEW);
-        pdfOpenintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        pdfOpenintent.setDataAndType(path, "application/pdf");
-        try {
-            startActivity(pdfOpenintent);
+    private void setUpButton(){
+        if(button == null) {
+            button = (Button) findViewById(R.id.searchButton);
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // Code here executes on main thread after user presses button
+                    if(text == null){
+                        text = (EditText) findViewById(R.id.searchBox);
+                    }
+                    presentPDF(text.getText().toString());
+                }
+            });
         }
-        catch (ActivityNotFoundException e) {
-
-        }*/
-
 
     }
 
-    public int jastrowSearch(String text){
-        boolean isThere = isHebrew(text);
-        //also make sure its not empty
-        int retval = 0;
-        if(isThere){
-            retval = 2;
+    /**
+     *
+     * @param text
+     * @return the page number
+     */
+    private int getPage(String text){
+        //TODO also make sure its not empty
+        if(isHebrew(text)){
+            if(pageFinder == null){
+                pageFinder = new BSForJPDF();
+            }
+            return pageFinder.search(text);
         }
-        else{
-            Toast t = new Toast(this);
-            t.makeText(this,R.string.hebrewOnlyError, Toast.LENGTH_SHORT).show();
+        else {
 
+
+            return -1;
         }
-
-        return retval;
     }
 
     /**
@@ -75,18 +73,26 @@ public class MainActivity extends AppCompatActivity {
      */
     public boolean isHebrew(String text){
 
-        HebrewCheck hr = new HebrewCheck();
-        return hr.Run(text);
+        if(hebrewCheck == null){
+            hebrewCheck = new HebrewCheck();
+        }
+        return hebrewCheck.isBasicHebrewCharacters(text);
 
     }
 
-    public void sendMessaage(View view){
-        EditText searchBox = (EditText) findViewById(R.id.searchBox);
-        String searchQuery = searchBox.getText().toString();
-        int page = jastrowSearch(searchQuery);
-        Intent intent = new Intent(this, PDFViewer.class);
-        intent.putExtra("Page",page);
-        startActivity(intent);
+    private void presentPDF(String keyword){
+        int page = getPage(keyword);
+        if(page<0){
+            Toast t = new Toast(this);
+            t.makeText(this, R.string.hebrewOnlyError, Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast t = new Toast(this);
+            t.makeText(this, "" + page, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, PDFViewer.class);
+            intent.putExtra("Page", page);
+            startActivity(intent);
+        }
 
     }
 
