@@ -13,5 +13,6 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
+        assertTrue(IntToString.toStringOfLengthX(104, 5).length() == 5);
     }
 }

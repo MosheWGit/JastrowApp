@@ -1,5 +1,6 @@
 *.iml
 *.pdf
+*.png
 .gradle
 /local.properties
 /.idea/workspace.xml

@@ -1,44 +1,48 @@
 package com.example.moish.jastrowapp;
 
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import com.github.barteksc.pdfviewer.PDFView;
+import android.util.Log;
+
+import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+
+
+import java.io.File;
 
 public class PDFViewer extends AppCompatActivity {
 
-    PDFView pdfView;
+    SubsamplingScaleImageView image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfviewer);
 
-        if(pdfView == null){
-            pdfView = (PDFView) findViewById(R.id.pdfView);
+        if(image == null){
+            image = (SubsamplingScaleImageView) findViewById(R.id.pdfView);
         }
-        pdfView.fromAsset("pg_0001.pdf");
-        //ImageView jastrowPic = (ImageView) findViewById(R.id.jastrowImage);
-        //jastrowPic.setImageResource(R.mipmap.jastrowimage);
 
 
 
 
+        Intent i = getIntent();
+        int page = (Integer) i.getExtras().get("Page");
+        String pageNumber = IntToString.toStringOfLengthX(page, 4);
 
+        String fileName = "jastrow" + pageNumber + ".png";
+        Resources r = getResources();
+        int resId = r.getIdentifier(fileName, "drawable", getPackageName());
+        Drawable drawable = r.getDrawable(resId, getTheme());
 
-        //openPDF(page);
-
-
-        /*File file = new File(Environment.getExternalStorageDirectory(),
-                "Report.pdf");
-        Uri path = Uri.fromFile(file);
-        Intent pdfOpenintent = new Intent(Intent.ACTION_VIEW);
-        pdfOpenintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        pdfOpenintent.setDataAndType(path, "application/pdf");
-        try {
-            startActivity(pdfOpenintent);
+        ImageSource imageSource = ImageSource.asset(fileName);
+        if(imageSource == null){
+            Log.e("pdf", "imagesource came back null. consider chekcing asset name");
         }
-        catch (ActivityNotFoundException e) {
-
-        }*/
-
+        image.setImage(imageSource);
     }
 }
