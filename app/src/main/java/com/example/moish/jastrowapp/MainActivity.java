@@ -3,6 +3,7 @@ package com.example.moish.jastrowapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,7 +40,13 @@ public class MainActivity extends AppCompatActivity {
                     if(text == null){
                         text = (EditText) findViewById(R.id.searchBox);
                     }
-                    presentPDF(text.getText().toString());
+                    Editable t = text.getText();
+                    if(t.toString().isEmpty()){
+                        //do nothing
+                    }
+                    else {
+                        presentPDF(text.getText().toString());
+                    }
                 }
             });
         }
@@ -52,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
      * @return the page number
      */
     private int getPage(String text){
-        //TODO also make sure its not empty
+        //TODO also make sure its not empty//TODO page 134 and 133 are misaligned
         if(isHebrew(text)){
             if(pageFinder == null){
                 pageFinder = new BSForJPDF();
@@ -82,13 +89,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void presentPDF(String keyword){
         int page = getPage(keyword);
-        if(page<0){
+        if(page == -1){
             Toast t = new Toast(this);
-            t.makeText(this, R.string.hebrewOnlyError, Toast.LENGTH_SHORT).show();
+            t.makeText(this, "hebrew characters only", Toast.LENGTH_SHORT).show();
+            text.setText("");
         }
+
         else {
-            Toast t = new Toast(this);
-            t.makeText(this, "" + page, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, PDFViewer.class);
             intent.putExtra("Page", page);
             startActivity(intent);

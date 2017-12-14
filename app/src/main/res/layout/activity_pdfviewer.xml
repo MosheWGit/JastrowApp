@@ -9,7 +9,6 @@
 
     <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
         android:id="@+id/pdfView"
-        ssiv:assetName="pg_0001.pdf"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
