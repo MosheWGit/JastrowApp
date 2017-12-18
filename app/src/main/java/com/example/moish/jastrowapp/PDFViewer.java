@@ -5,9 +5,11 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
@@ -17,9 +19,12 @@ import java.io.File;
 
 public class PDFViewer extends AppCompatActivity {
 
-    SubsamplingScaleImageView image;
-    ImageSource imageSource;
-    int resId;
+    private SubsamplingScaleImageView image;
+    private ImageSource imageSource;
+    private int resId;
+    private int pageNumber;
+    private FloatingActionButton right;
+    private FloatingActionButton left;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +36,7 @@ public class PDFViewer extends AppCompatActivity {
 
         if(savedInstanceState != null){
             resId = savedInstanceState.getInt("resId");
-            imageSource = ImageSource.resource(resId);
+            updateImageBasedOnResId();
         }
         else {
             setImageSource();
@@ -39,18 +44,51 @@ public class PDFViewer extends AppCompatActivity {
 
 
         image.setImage(imageSource);
+        setUpButtons();
+
+    }
+
+    private void setUpButtons() {
+        left = (FloatingActionButton) findViewById(R.id.leftButton);
+        right = (FloatingActionButton) findViewById(R.id.rightButton);
+        left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(pageNumber < 1704) {
+                    updateResID(pageNumber++);
+                    updateImageBasedOnResId();
+                }
+            }
+        });
+        right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(pageNumber > 1) {
+                    updateResID(pageNumber--);
+                    updateImageBasedOnResId();
+                }
+            }
+        });
+    }
+
+    private void updateImageBasedOnResId() {
+        imageSource = ImageSource.resource(resId);
+    }
+
+    private void updateResID(int page) {
+        String pageNumber = IntToString.toStringOfLengthX(page, 4);
+
+        String fileName = "jastrow" + pageNumber;
+        Resources r = getResources();
+        resId = r.getIdentifier(fileName, "drawable", getApplication().getPackageName());
 
     }
 
 
     private void setImageSource() {
         Intent i = getIntent();
-        int page = (Integer) i.getExtras().get("Page");
-        String pageNumber = IntToString.toStringOfLengthX(page, 4);
-
-        String fileName = "jastrow" + pageNumber;
-        Resources r = getResources();
-        resId = r.getIdentifier(fileName, "drawable", getApplication().getPackageName());
+        pageNumber = (Integer) i.getExtras().get("Page");
+        updateResID(pageNumber);
 
 
         imageSource = ImageSource.resource(resId);
