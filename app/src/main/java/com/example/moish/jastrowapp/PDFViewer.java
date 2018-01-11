@@ -30,12 +30,15 @@ public class PDFViewer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfviewer);
 
+
+
         if(image == null){
             image = (SubsamplingScaleImageView) findViewById(R.id.pdfView);
         }
 
         if(savedInstanceState != null){
             resId = savedInstanceState.getInt("resId");
+            pageNumber = savedInstanceState.getInt("pgNum");
             updateImageBasedOnResId();
         }
         else {
@@ -51,21 +54,23 @@ public class PDFViewer extends AppCompatActivity {
     private void setUpButtons() {
         left = (FloatingActionButton) findViewById(R.id.leftButton);
         right = (FloatingActionButton) findViewById(R.id.rightButton);
-        left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(pageNumber < 1704) {
-                    updateResID(pageNumber++);
-                    updateImageBasedOnResId();
-                }
-            }
-        });
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(pageNumber > 1) {
-                    updateResID(pageNumber--);
+                if(pageNumber < 1704) {
+                    updateResID(++pageNumber);
                     updateImageBasedOnResId();
+                    Log.d("Floating", "right pressed");
+                }
+            }
+        });
+        left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(pageNumber > 1) {
+                    updateResID(--pageNumber);
+                    updateImageBasedOnResId();
+                    Log.d("Floating", "left pressed");
                 }
             }
         });
@@ -73,6 +78,7 @@ public class PDFViewer extends AppCompatActivity {
 
     private void updateImageBasedOnResId() {
         imageSource = ImageSource.resource(resId);
+        image.setImage(imageSource);
     }
 
     private void updateResID(int page) {
@@ -97,10 +103,12 @@ public class PDFViewer extends AppCompatActivity {
         }
     }
 
+
+
     @Override
     public void onSaveInstanceState(Bundle outState){
         outState.putInt("resId", resId);
-
+        outState.putInt("pgNum", pageNumber);
         super.onSaveInstanceState(outState);
     }
 }
