@@ -49,7 +49,7 @@ public class PDFViewer extends AppCompatActivity {
             setImageSource();
         }
 
-
+        imageSource = ExternalStrorageHandler.getImageSource(1000, this);
         image.setImage(imageSource);
 
         setUpButtons();
