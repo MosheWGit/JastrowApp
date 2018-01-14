@@ -26,9 +26,12 @@ dependencies {
     })
     compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.9.0'
     compile 'org.apache.commons:commons-io:1.3.2'
-    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.github.bolein.better-apk-expansion:zip_file:5.0.2'
+    compile 'com.github.bolein:better-apk-expansion:4.0.1'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    //compile 'com.github.bolein.better-apk-expansion:downloader_library:5.0.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile files('libs/jastrow-1.2.jar')
-    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:design:26.1.0'
 }

@@ -17,6 +17,8 @@ import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
 import java.io.File;
 
+import static android.os.Environment.getExternalStorageDirectory;
+
 public class PDFViewer extends AppCompatActivity {
 
     private SubsamplingScaleImageView image;
@@ -29,6 +31,8 @@ public class PDFViewer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfviewer);
+
+        //Log.e("tesing", getExternalStorageDirectory().toString());
 
 
 
@@ -47,6 +51,7 @@ public class PDFViewer extends AppCompatActivity {
 
 
         image.setImage(imageSource);
+
         setUpButtons();
 
     }

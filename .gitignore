@@ -1,6 +1,7 @@
 *.iml
 *.pdf
 *.png
+*.apk
 .gradle
 /res
 /local.properties
