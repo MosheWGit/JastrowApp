@@ -1,4 +1,4 @@
-package com.example.moish.jastrowapp;
+package com.flyingpenguins.devs.jastrowapp;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

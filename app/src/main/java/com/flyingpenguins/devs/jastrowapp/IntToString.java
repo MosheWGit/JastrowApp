@@ -1,4 +1,4 @@
-package com.example.moish.jastrowapp;
+package com.flyingpenguins.devs.jastrowapp;
 
 /**
  * Created by noah on 12/13/17.

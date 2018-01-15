@@ -1,4 +1,4 @@
-package com.example.moish.jastrowapp;
+package com.flyingpenguins.devs.jastrowapp;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -17,7 +17,7 @@ import java.io.InputStream;
 
 public class ExternalStrorageHandler {
 
-    public static final int MAINVERSION = 100;
+    public static final int MAINVERSION = 1;
     public static final int PATCHVERSION = 0;
 
     public static ImageSource getImageSource(int page, Context context){

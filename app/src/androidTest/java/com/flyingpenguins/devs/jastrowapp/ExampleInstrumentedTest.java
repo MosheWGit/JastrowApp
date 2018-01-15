@@ -1,4 +1,4 @@
-package com.example.moish.jastrowapp;
+package com.flyingpenguins.devs.jastrowapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
