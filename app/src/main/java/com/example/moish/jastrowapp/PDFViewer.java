@@ -1,10 +1,6 @@
 package com.example.moish.jastrowapp;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,10 +10,6 @@ import android.view.View;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
-
-import java.io.File;
-
-import static android.os.Environment.getExternalStorageDirectory;
 
 public class PDFViewer extends AppCompatActivity {
 
@@ -32,7 +24,7 @@ public class PDFViewer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfviewer);
 
-        //Log.e("tesing", getExternalStorageDirectory().toString());
+
 
 
 
@@ -41,19 +33,23 @@ public class PDFViewer extends AppCompatActivity {
         }
 
         if(savedInstanceState != null){
-            resId = savedInstanceState.getInt("resId");
             pageNumber = savedInstanceState.getInt("pgNum");
-            updateImageBasedOnResId();
+
         }
         else {
-            setImageSource();
+            pageNumber = getPageNumberFromIntent();
         }
 
-        imageSource = ExternalStrorageHandler.getImageSource(1000, this);
-        image.setImage(imageSource);
+        updateImage(pageNumber);
+
+
 
         setUpButtons();
 
+    }
+
+    private void updateImage(int pageNumber) {
+        image.setImage(ExternalStrorageHandler.getImageSource(pageNumber, this));
     }
 
     private void setUpButtons() {
@@ -63,8 +59,8 @@ public class PDFViewer extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(pageNumber < 1704) {
-                    updateResID(++pageNumber);
-                    updateImageBasedOnResId();
+                    updateImage(++pageNumber);
+
                     Log.d("Floating", "right pressed");
                 }
             }
@@ -73,46 +69,29 @@ public class PDFViewer extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(pageNumber > 1) {
-                    updateResID(--pageNumber);
-                    updateImageBasedOnResId();
+                    updateImage(--pageNumber);
+
                     Log.d("Floating", "left pressed");
                 }
             }
         });
     }
 
-    private void updateImageBasedOnResId() {
-        imageSource = ImageSource.resource(resId);
-        image.setImage(imageSource);
-    }
-
-    private void updateResID(int page) {
-        String pageNumber = IntToString.toStringOfLengthX(page, 4);
-
-        String fileName = "jastrow" + pageNumber;
-        Resources r = getResources();
-        resId = r.getIdentifier(fileName, "drawable", getApplication().getPackageName());
-
-    }
 
 
-    private void setImageSource() {
+
+
+    private int getPageNumberFromIntent() {
         Intent i = getIntent();
-        pageNumber = (Integer) i.getExtras().get("Page");
-        updateResID(pageNumber);
+        return (Integer) i.getExtras().get("Page");
 
-
-        imageSource = ImageSource.resource(resId);
-        if(imageSource == null){
-            Log.e("pdf", "imagesource came back null. consider chekcing asset name");
-        }
     }
 
 
 
     @Override
     public void onSaveInstanceState(Bundle outState){
-        outState.putInt("resId", resId);
+
         outState.putInt("pgNum", pageNumber);
         super.onSaveInstanceState(outState);
     }
