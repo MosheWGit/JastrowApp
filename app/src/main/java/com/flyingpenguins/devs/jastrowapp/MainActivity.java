@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,13 +12,19 @@ import android.widget.Toast;
 
 
 import com.flyingpenguins.app.*;
+import com.google.android.vending.expansion.downloader.Helpers;
+import com.google.android.vending.expansion.zipfile.APKExpansionSupport;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
     private HebrewCheck hebrewCheck;
     private BSForJPDF pageFinder;
+    private boolean eternalsMemoryOK;
     Button button;
     EditText text;
+
 
 
     @Override
@@ -26,11 +33,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.e("Testing", "" + expansionFilesDelivered());
+
         //Log.d("tesing", getExternalStorageDirectory().toString());
 
         getPage("גע"); //this warms up the page finder
 
         setUpButton();
+    }
+
+    boolean expansionFilesDelivered() {
+
+        String fileName = Helpers.getExpansionAPKFileName(this, true,
+                Globals.Expansions.MAINVERSION);
+        if (!Helpers.doesFileExist(this, fileName, Globals.Expansions.SIZE,false))
+            return false;
+
+        return true;
     }
 
     private void setUpButton(){
