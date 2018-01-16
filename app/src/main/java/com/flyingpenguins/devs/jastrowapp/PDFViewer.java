@@ -42,7 +42,7 @@ public class PDFViewer extends AppCompatActivity {
 
         updateImage(pageNumber);
 
-
+        
 
         setUpButtons();
 

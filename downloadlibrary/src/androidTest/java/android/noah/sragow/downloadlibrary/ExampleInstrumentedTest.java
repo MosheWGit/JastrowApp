@@ -1,4 +1,4 @@
-package android.noah.sragow.backrounddownloader;
+package android.noah.sragow.downloadlibrary;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("android.noah.sragow.backrounddownloader.test", appContext.getPackageName());
+        assertEquals("android.noah.sragow.downloadlibrary.test", appContext.getPackageName());
     }
 }

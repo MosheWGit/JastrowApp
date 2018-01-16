@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Jastrow.iml" filepath="$PROJECT_DIR$/Jastrow.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/downloadlibrary/downloadlibrary.iml" filepath="$PROJECT_DIR$/downloadlibrary/downloadlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/licenselibrary/licenselibrary.iml" filepath="$PROJECT_DIR$/licenselibrary/licenselibrary.iml" />
     </modules>
   </component>
 </project>
