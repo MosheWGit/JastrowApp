@@ -7,33 +7,12 @@
     android:layout_height="match_parent"
     tools:context="com.flyingpenguins.devs.jastrowapp.PDFViewer">
 
-    <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+    <com.flyingpenguins.devs.jastrowapp.SubsamplingScaleImageView
         android:id="@+id/pdfView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/rightButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:clickable="true"
-        android:foregroundGravity="bottom|right"
-        app:backgroundTint="@color/colorAccent"
-        ssiv:fabSize="mini"
-        ssiv:srcCompat="@android:drawable/ic_media_ff" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/leftButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:clickable="true"
-        android:foregroundGravity="top|left"
-        app:backgroundTint="@color/colorAccent"
-        ssiv:fabSize="mini"
-        ssiv:srcCompat="@android:drawable/ic_media_rew" />
-
+    
 </FrameLayout>

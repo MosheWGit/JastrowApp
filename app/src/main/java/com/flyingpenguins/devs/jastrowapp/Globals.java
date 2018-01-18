@@ -5,6 +5,10 @@ package com.flyingpenguins.devs.jastrowapp;
  */
 
 public class Globals {
+    public static final float MINSWIPESPEED = 2500.0F;
+
+    public static final float MAXSWIPEANGLE = 1.2F;
+
     public class Expansions{
         public static final long SIZE = 328672722l;
         public static final int MAINVERSION = 1;

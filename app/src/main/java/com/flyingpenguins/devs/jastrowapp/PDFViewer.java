@@ -5,24 +5,27 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 
-import com.davemorrissey.labs.subscaleview.ImageSource;
-import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
 
-public class PDFViewer extends AppCompatActivity {
+
+public class PDFViewer extends AppCompatActivity implements SwipeListener{
 
     private SubsamplingScaleImageView image;
     private ImageSource imageSource;
     private int resId;
     private int pageNumber;
-    private FloatingActionButton right;
-    private FloatingActionButton left;
+
+    private GestureDetector gD;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfviewer);
+
 
 
 
@@ -42,44 +45,15 @@ public class PDFViewer extends AppCompatActivity {
 
         updateImage(pageNumber);
 
-        
+        image.setSwipeListener(this);
 
-        setUpButtons();
+
 
     }
 
     private void updateImage(int pageNumber) {
         image.setImage(ExternalStrorageHandler.getImageSource(pageNumber, this));
     }
-
-    private void setUpButtons() {
-        left = (FloatingActionButton) findViewById(R.id.leftButton);
-        right = (FloatingActionButton) findViewById(R.id.rightButton);
-        right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(pageNumber < 1704) {
-                    updateImage(++pageNumber);
-
-                    Log.d("Floating", "right pressed");
-                }
-            }
-        });
-        left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(pageNumber > 1) {
-                    updateImage(--pageNumber);
-
-                    Log.d("Floating", "left pressed");
-                }
-            }
-        });
-    }
-
-
-
-
 
     private int getPageNumberFromIntent() {
         Intent i = getIntent();
@@ -94,5 +68,26 @@ public class PDFViewer extends AppCompatActivity {
 
         outState.putInt("pgNum", pageNumber);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void OnSwipe(MotionEvent e1, MotionEvent e2, float velX, float velY) {
+        float xDirection = e2.getX(0) - e1.getX(0);
+        float yDirection = e2.getY(0) - e1.getY(0);
+        float angle= yDirection/xDirection;
+
+
+        if(Math.abs(angle)<Globals.MAXSWIPEANGLE&&Math.abs(velX)>Globals.MINSWIPESPEED) {
+
+            if(xDirection>0){
+                if(pageNumber > 1) {
+                    updateImage(--pageNumber);
+                }
+            }else{
+                if(pageNumber < 1704) {
+                    updateImage(++pageNumber);
+                }
+            }
+        }
     }
 }

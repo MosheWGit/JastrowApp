@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import com.davemorrissey.labs.subscaleview.ImageSource;
+
 import com.google.android.vending.expansion.zipfile.APKExpansionSupport;
 import com.google.android.vending.expansion.zipfile.ZipResourceFile;
 
